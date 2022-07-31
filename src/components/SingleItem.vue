@@ -52,11 +52,13 @@ export default {
     right: -10px;
     top: -10px;
   }
-  :hover ~ .DeleteButton{
-    display: block;
-    display: flex;
-    justify-content: center;
-    align-content: center;
+  &:hover{
+    .DeleteButton{
+      display: block;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+    }
   }
   img{
     height: 200px;

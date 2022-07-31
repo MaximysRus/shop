@@ -2,17 +2,27 @@
     <div class='SideBar'>
       <form class="ItemForm" @submit.prevent="submit($event)">
 
-          <label for="itemName">Название товара <span></span></label>
-          <input type="text" id="itemName" name="Name" placeholder="Название товара" v-model="form.name">
+          <div class="Field">
+            <label for="itemName">Название товара <span></span></label>
+            <input type="text" id="itemName" name="Name" placeholder="Название товара" v-model="form.name" @blur="onBlur($event)">
+            <span class="warningText">Поле является обязательным</span>
+          </div>
+
 
           <label for="itemDescription">Описание товара</label>
           <textarea id="itemDescription" name="Description" placeholder="Описание товара" v-model="form.description"></textarea>
 
-          <label for="itemImgURL">Ссылка на изображение товара <span></span></label>
-          <input type="text" id="itemImgURL" name="ImgURL" placeholder="Ссылка на изображение товара" v-model="form.imgURL">
+          <div class="Field">
+            <label for="itemImgURL">Ссылка на изображение товара <span></span></label>
+            <input type="text" id="itemImgURL" name="ImgURL" placeholder="Ссылка на изображение товара" v-model="form.imgURL" @blur="onBlur($event)">
+            <span class="warningText">Поле является обязательным</span>
+          </div>
 
-          <label for="itemCost">Цена <span></span></label>
-          <input type="number" id="itemCost" name="Cost" placeholder="Цена" v-model="form.cost">
+          <div class="Field">
+            <label for="itemCost">Цена <span></span></label>
+            <input type="number" id="itemCost" name="Cost" placeholder="Цена" v-model="form.cost" @blur="onBlur($event)">
+            <span class="warningText">Поле является обязательным</span>
+          </div>
 
           <button type="submit" :disabled="checkValid()">Добавить товар</button>
 
@@ -21,6 +31,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'SideBar',
   data() {
@@ -35,17 +46,41 @@ export default {
   },
   methods: {
     checkValid() {
-      return !this.form.name || this.form.cost<0 || !this.form.imgURL
+      return !this.form.name || this.form.cost<0 || !this.form.imgURL|| !this.form.cost
     },
     submit(e) {
       e.preventDefault();
       this.$store.commit('addItem', this.form);
+    },
+    onBlur(e) {
+      const {value, parentNode: parent} = e.target;
+      value ? parent.classList.remove("error") : !parent.classList.contains("error") && parent.classList.add("error");
     }
   }
 }
 </script>
 
 <style lang="scss">
+.Field {
+  display: block;
+  position: relative;
+  .warningText{
+    opacity: 0;
+    font-size: 8px;
+    color: #FF8484;
+    position: absolute;
+    left: 0px;
+    bottom: -14px;
+  }
+  &.error{
+    .warningText{
+      opacity: 1;
+    }
+    input{
+      outline: 1px solid #FF8484;
+    }
+  }
+}
 .SideBar {
   display: block;
   padding: 24px;
