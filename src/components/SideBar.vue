@@ -4,8 +4,8 @@
 
           <div class="Field">
             <label for="itemName">Название товара <span></span></label>
-            <input type="text" id="itemName" name="Name" placeholder="Название товара" v-model="form.name" @blur="onBlur($event)">
-            <span class="warningText">Поле является обязательным</span>
+            <input type="text" id="itemName" name="name" placeholder="Название товара" v-model="form.name" @blur="onBlur($event)">
+            <span class="warningText">{{formErrors.name}}</span>
           </div>
 
 
@@ -14,14 +14,14 @@
 
           <div class="Field">
             <label for="itemImgURL">Ссылка на изображение товара <span></span></label>
-            <input type="text" id="itemImgURL" name="ImgURL" placeholder="Ссылка на изображение товара" v-model="form.imgURL" @blur="onBlur($event)">
-            <span class="warningText">Поле является обязательным</span>
+            <input type="text" id="itemImgURL" name="imgURL" placeholder="Ссылка на изображение товара" v-model="form.imgURL" @blur="onBlur($event)">
+            <span class="warningText">{{formErrors.imgURL}}</span>
           </div>
 
           <div class="Field">
             <label for="itemCost">Цена <span></span></label>
-            <input type="number" id="itemCost" name="Cost" placeholder="Цена" v-model="form.cost" @blur="onBlur($event)">
-            <span class="warningText">Поле является обязательным</span>
+            <input type="number" id="itemCost" name="cost" placeholder="Цена" v-model="form.cost" @blur="onBlur($event)">
+            <span class="warningText">{{formErrors.cost}}</span>
           </div>
 
           <button type="submit" :disabled="checkValid()">Добавить товар</button>
@@ -31,12 +31,17 @@
 </template>
 
 <script>
-
 export default {
   name: 'SideBar',
   data() {
     return {
       form: {
+        name: "",
+        description: "",
+        imgURL: "",
+        cost: "",
+      },
+      formErrors: {
         name: "",
         description: "",
         imgURL: "",
@@ -53,8 +58,18 @@ export default {
       this.$store.commit('addItem', this.form);
     },
     onBlur(e) {
-      const {value, parentNode: parent} = e.target;
-      value ? parent.classList.remove("error") : !parent.classList.contains("error") && parent.classList.add("error");
+      const {value, parentNode: parent, name} = e.target;
+      if(!value) {
+        this.formErrors[name] = "Поле является обязательным";
+        !parent.classList.contains("error") && parent.classList.add("error");
+        return;
+      }
+      if(name ===  'cost' && value < 0){
+        this.formErrors.cost = "Должно быть положительным";
+        !parent.classList.contains("error") && parent.classList.add("error");
+        return;
+      }
+      parent.classList.remove("error");
     }
   }
 }

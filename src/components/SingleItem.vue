@@ -61,14 +61,15 @@ export default {
     }
   }
   img{
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     height: 200px;
     width: 100%;
   }
   h1,h2,p {
-    font-size: 16px;
     max-width: calc(100%-32);
-    overflow-y: auto;
-    scroll-snap-type: y;
+    text-overflow: ellipsis;
+    overflow: hidden;
     margin: 16px;
   }
   h1 {
@@ -76,6 +77,11 @@ export default {
   }
   h2 {
     font-size: 24px;
+  }
+  p {
+    font-size: 16px;
+    height: 80px;
+    margin: 0px 16px;
   }
 }
 </style>
