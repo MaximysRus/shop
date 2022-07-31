@@ -26,7 +26,8 @@ export default {
 
 <style lang="scss">
 .ItemCatalog {
-  width: 100%;
+  width: 1200px;
+  min-width: 1200px;
   max-width: 100%;
   display: flex;
   flex-wrap: wrap;
