@@ -2,10 +2,10 @@
   <div class="wrapper">
     <div class="head">Добавление товара</div>
     <select class="sort" v-model="select">
-      <option value="0" selected><span>По умолчанию</span></option>
-      <option value="1"><span>По убыванию цены</span></option>
-      <option value="2"><span>По возрастанию цены</span></option>
-      <option value="3"><span>По наименованию</span></option>
+      <option value="sortById" selected><span>По умолчанию</span></option>
+      <option value="sortByCostDown"><span>По убыванию цены</span></option>
+      <option value="sortByCostUp"><span>По возрастанию цены</span></option>
+      <option value="sortByName"><span>По наименованию</span></option>
     </select>
     <SiteBar></SiteBar>
     <ItemCatalog :items="items"></ItemCatalog>
@@ -24,30 +24,14 @@ export default {
   },
   data() {
     return {
-    select: 0
-    }
-  },
-  methods: {
-    sortArray(x, y) {
-    if (x.name < y.name) {return -1;}
-    if (x.name > y.name) {return 1;}
-    return 0;
+    select: "sortById"
     }
   },
   watch: {
     select: {
       deep: true,
-      handler(newValue) {
-        switch(newValue) {
-          case '0': this.$store.commit('loadStore');
-          break;
-          case '1': this.items.sort((a, b) => parseFloat(b.cost) - parseFloat(a.cost));
-          break;
-          case '2': this.items.sort((a, b) => parseFloat(a.cost) - parseFloat(b.cost));
-          break;
-          case '3': this.items.sort(this.sortArray);
-          break;
-        }
+      handler() {
+        this.$store.commit('sortItems', this.select);
       }
     }
   },
