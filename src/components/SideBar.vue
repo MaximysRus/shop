@@ -108,6 +108,7 @@ export default {
 }
 .ItemForm {
   label {
+    font-size: 10px;
     margin-top: 15px;
     margin-bottom: 5px;
     position: relative;

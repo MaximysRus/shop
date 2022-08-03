@@ -10,11 +10,7 @@ import SingleItem from './SingleItem.vue'
 
 export default {
   name: 'ItemCatalog',
-  computed: {
-    items() {
-      return this.$store.getters.allItems
-    }
-  },
+  props: ['items'],
   components: {
     SingleItem
   },
@@ -26,8 +22,8 @@ export default {
 
 <style lang="scss">
 .ItemCatalog {
-  width: 1200px;
-  min-width: 1200px;
+  width: 1100px;
+  min-width: 1100px;
   max-width: 100%;
   display: flex;
   flex-wrap: wrap;
